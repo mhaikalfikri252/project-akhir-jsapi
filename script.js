@@ -1,4 +1,22 @@
+const loader = document.getElementById("loading");
+
+// showing loading
+function displayLoading() {
+  loader.classList.add("display");
+  // to stop loading after some time
+  setTimeout(() => {
+    loader.classList.remove("display");
+  }, 5000);
+}
+
+// hiding loading
+function hideLoading() {
+  loader.classList.remove("display");
+}
+
 const getWeatherForecast = async (cityName) => {
+  displayLoading();
+
   try {
     const response = await fetch(
       `https://weatherapi-com.p.rapidapi.com/forecast.json?q=${cityName}&days=3`,
@@ -12,6 +30,7 @@ const getWeatherForecast = async (cityName) => {
       }
     );
     const data = await response.json();
+    hideLoading();
     console.log(data);
     return data;
   } catch (error) {
